@@ -22,7 +22,7 @@ fi
 if $RUN_CYTHON ; then
     echo "compiling euler.py"
     cython3 euler.py --embed -o ./build/python.c
-    gcc -Os -I /usr/include/python$PYTHON_VERSIONm -o ./bin/python ./build/python.c -lpython$PYTHON_VERSIONm -lpthread -lm -lutil -ldl
+    gcc -Os -I'/usr/include/python'$PYTHON_VERSION'm' -o ./bin/python ./build/python.c -l'python'$PYTHON_VERSION'm' -lpthread -lm -lutil -ldl
 fi
 
 #
