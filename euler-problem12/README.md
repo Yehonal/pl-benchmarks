@@ -14,6 +14,8 @@ This is the [Problem #12](https://projecteuler.net/index.php?section=problems&id
 
 In order to get some higher execution times, it searchs for the first triangle number with more than 1000 divisors instead of 500 as stated in the original problem.
 
+You can find some results here: [https://github.com/Yehonal/pl-benchmarks/wiki]
+
 ### === REQUIREMENTS ===
 
 To fully compile and run all benchmarks you need following packages installed:

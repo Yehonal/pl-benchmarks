@@ -73,7 +73,7 @@ if $RUN_PYPY ; then
     time pypy ./euler.py
 fi
 
-if $RUN_PERL then
+if $RUN_PERL; then
     echo "starting interpreted perl benchmark ( don't worry , it can take some minutes )..."
     time perl ./euler.perl
 fi
