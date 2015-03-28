@@ -1,0 +1,16 @@
+RUN_PYTHON=true
+
+RUN_CYTHON=true
+PYTHON_VERSION=3.4
+
+RUN_CPP=true
+
+RUN_C=true
+
+RUN_NODEJS=true
+
+RUN_PHP=true
+
+RUN_PERL=true
+
+RUN_JAVA=true
