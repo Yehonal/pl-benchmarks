@@ -68,6 +68,11 @@ if $RUN_PYTHON ; then
     time python3 ./euler.py
 fi
 
+if $RUN_PYPY ; then
+    echo "starting interpreted pypy benchmark..."
+    time pypy ./euler.py
+fi
+
 if $RUN_PERL then
     echo "starting interpreted perl benchmark ( don't worry , it can take some minutes )..."
     time perl ./euler.perl

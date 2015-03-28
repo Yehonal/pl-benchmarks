@@ -21,6 +21,7 @@ To fully compile and run all benchmarks you need following packages installed:
 - time
 - gcc
 - g++
+- pypy
 - python2 or python3
 - cython2 or cython3
 - php

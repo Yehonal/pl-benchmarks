@@ -1,3 +1,5 @@
+RUN_PYPY=true
+
 RUN_PYTHON=true
 
 RUN_CYTHON=true
