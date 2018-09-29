@@ -13,6 +13,8 @@ RUN_NODEJS=true
 
 RUN_PHP=true
 
+RUN_PHP_HHVM=true
+
 RUN_PERL=true
 
 RUN_JAVA=true

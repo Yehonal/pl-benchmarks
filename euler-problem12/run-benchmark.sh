@@ -1,3 +1,5 @@
+#!/bin/bash
+
 . config.sh || exit
 
 #
@@ -25,58 +27,108 @@ if $RUN_CYTHON ; then
     gcc -Os -I'/usr/include/python'$PYTHON_VERSION'm' -o ./bin/python ./build/python.c -l'python'$PYTHON_VERSION'm' -lpthread -lm -lutil -ldl
 fi
 
-#
-# TESTING COMPILED LANGUAGES
-#
-
 if $RUN_C ; then
-    echo "starting compiled c benchmark..."
+    echo "starting c benchmark (compiled)..."
     time ./bin/c
 fi
 
+echo ""
+echo "==========================="
+echo ""
+
 if $RUN_CPP ; then
-    echo "starting compiled c++ benchmark..."
+    echo "starting c++ benchmark (compiled)..."
     time ./bin/cpp
 fi
 
-if $RUN_JAVA ; then
-    echo "starting compiled java benchmark..."
-    time java -jar ./bin/java.jar
-fi
+echo ""
+echo "==========================="
+echo ""
 
 if $RUN_CYTHON ; then
-    echo "starting compiled python benchmark ( don't worry , it can take some minutes )..."
+    cython3 --version
+    echo "starting c-python benchmark (compiled)..."
     time ./bin/python
 fi
 
-#
-# TESTING INTERPRETED LANGUAGES
-#
+echo ""
+echo "==========================="
+echo ""
+
+if $RUN_JAVA ; then
+    java --version
+    echo "starting java benchmark (JIT)..."
+    time java -jar ./bin/java.jar
+fi
+
+echo ""
+echo "==========================="
+echo ""
+
+
+echo ""
+echo "==========================="
+echo ""
 
 if $RUN_NODEJS ; then
-    echo "starting interpreted nodejs ( javascript ) benchmark..."
+    nodejs --version
+    echo "starting nodejs (javascript) benchmark (JIT)..."
     time nodejs ./euler.js
 fi
 
+echo ""
+echo "==========================="
+echo ""
+
 if $RUN_PHP ; then
-    echo "starting interpreted php benchmark ( don't worry , it can take some minutes )..."
+    php --version
+    echo "starting php benchmark (interpreted on 5, interpreted/opcache on 7, JIT if 8)..."
     time php ./euler.php
 fi
 
+echo ""
+echo "==========================="
+echo ""
+
+if $RUN_PHP_HHVM ; then
+    hhvm --version
+    echo "starting php on hhvm benchmark (JIT)..."
+    time hhvm ./euler.php
+fi
+
+echo ""
+echo "==========================="
+echo ""
+
 if $RUN_PYTHON ; then
-    echo "starting interpreted python benchmark ( don't worry , it can take some minutes )..."
+    python3 --version
+    echo "starting python benchmark (interpreted)..."
     time python3 ./euler.py
 fi
 
+echo ""
+echo "==========================="
+echo ""
+
 if $RUN_PYPY ; then
-    echo "starting interpreted pypy benchmark..."
+    pypy --version
+    echo "starting pypy benchmark (JIT)..."
     time pypy ./euler.py
 fi
 
+echo ""
+echo "==========================="
+echo ""
+
 if $RUN_PERL; then
-    echo "starting interpreted perl benchmark ( don't worry , it can take some minutes )..."
+    perl --version
+    echo "starting perl benchmark (interpreted)..."
     time perl ./euler.perl
 fi
+
+echo ""
+echo "==========================="
+echo ""
 
 #
 # DONE

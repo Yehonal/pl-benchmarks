@@ -24,12 +24,13 @@ To fully compile and run all benchmarks you need following packages installed:
 - gcc
 - g++
 - pypy
-- python2 or python3
+- python2 & python2-dev or python3 & python3-dev
 - cython2 or cython3
 - php
+- hhvm
 - perl
 - nodejs
-- jre ( for javac and java )
+- jre & jdk ( for javac and java )
 - bash ( of course )
 
 ### === USAGE ===
