@@ -2,7 +2,7 @@
 
 ### === INTRO ===
 
-This is the [Problem #12](https://projecteuler.net/index.php?section=problems&id=12) from [Project Euler](https://projecteuler.net/) to compare (surely not optimal) implementations in:
+[This](https://github.com/Yehonal/pl-benchmarks/tree/master/euler-problem12) is the [Problem #12](https://projecteuler.net/index.php?section=problems&id=12) from [Project Euler](https://projecteuler.net/) to compare (surely not optimal) implementations in:
  
 - C
 - C++
