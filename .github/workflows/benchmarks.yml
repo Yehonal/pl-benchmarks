@@ -50,10 +50,6 @@ jobs:
     permissions:
       contents: write
       pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -76,22 +72,32 @@ jobs:
           fi
           gcc -O2 -static ci/measure.c -o "$RUNNER_TEMP/timer"
           node ci/benchmark.mjs plan.json "$site" "$RUNNER_TEMP/timer"
-          mkdir "$RUNNER_TEMP/public"
-          cp -r "$site/index.html" "$site/runs" "$RUNNER_TEMP/public/"
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: ${{ runner.temp }}/public
-      - name: Publish results
-        id: deploy
-        uses: actions/deploy-pages@v4
-      - name: Record successfully published versions
+      - name: Publish verified results to the Pages source
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           cd "$RUNNER_TEMP/site"
           git config user.name github-actions
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add index.html runs state.json
+          touch .nojekyll
+          git add index.html runs state.json .nojekyll
           git commit -qm "Publish benchmark run $GITHUB_RUN_ID"
           gh auth setup-git
           git push origin HEAD:refs/heads/benchmark-results
+      - name: Build the Pages site and verify the public report
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh api --method POST "repos/$GITHUB_REPOSITORY/pages/builds" >/dev/null
+          site_url=$(gh api "repos/$GITHUB_REPOSITORY/pages" --jq .html_url)
+          report="runs/$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT.json"
+          for attempt in {1..60}; do
+            if curl -fsSL --max-time 10 "${site_url/http:/https:}$report" -o "$RUNNER_TEMP/published.json" && cmp -s "$RUNNER_TEMP/site/$report" "$RUNNER_TEMP/published.json"; then
+              echo "Verified $site_url$report" >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "Verified data is saved on benchmark-results; check the Pages build." >&2
+          exit 1
