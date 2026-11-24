@@ -13,7 +13,7 @@ fi
 
 if $RUN_CPP ; then
     echo "compiling euler.cpp"
-    g++ euler.c -o "./bin/cpp"
+    g++ euler.cpp -o "./bin/cpp"
 fi
 
 if $RUN_JAVA ; then
