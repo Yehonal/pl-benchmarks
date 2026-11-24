@@ -12,9 +12,9 @@ const run = { time: new Date().toISOString(), commit: process.env.GITHUB_SHA, cp
   runner: process.env.ImageVersion, jobs, results: [] };
 const docker = (...args) => execFileSync('docker', args, { encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
 const imageFor = (name, v) => ({
-  gcc: 'gcc:' + v, node: 'node:' + v + '-bookworm', python: 'python:' + v + '-bookworm',
-  pypy: 'pypy:' + v + '-bookworm', php: 'php:' + v + '-cli', perl: 'perl:' + v,
-  'eclipse-temurin': 'eclipse-temurin:' + v + '-jdk-noble', cython: 'python:3.12.12-bookworm',
+  gcc: 'gcc:' + v, node: 'node:' + v, python: 'python:' + v,
+  pypy: 'pypy:' + v, php: 'php:' + v + '-cli', perl: 'perl:' + v,
+  'eclipse-temurin': 'eclipse-temurin:' + v + '-jdk', cython: 'python:3.12.12-bookworm',
 })[name];
 for (const { name, version, previous } of jobs) {
   for (const v of [previous, version].filter(Boolean)) {
