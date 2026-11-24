@@ -1,0 +1,97 @@
+name: Release benchmarks
+on:
+  schedule:
+    - cron: '23 4 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: release-benchmarks
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    outputs:
+      changed: ${{ steps.detect.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Load last successful release inventory
+        run: |
+          set -euo pipefail
+          if git ls-remote --exit-code origin refs/heads/benchmark-results > /dev/null; then
+            git fetch --depth=1 origin refs/heads/benchmark-results
+            mkdir previous
+            git show FETCH_HEAD:state.json > previous/state.json
+          else
+            code=$?
+            test "$code" = 2
+          fi
+      - name: Check stable runtime releases
+        id: detect
+        run: |
+          git clone --quiet --bare --filter=blob:none --single-branch https://github.com/docker-library/official-images.git "$RUNNER_TEMP/catalogue.git"
+          node ci/releases.mjs previous "$RUNNER_TEMP/catalogue.git" plan.json
+      - uses: actions/upload-artifact@v4
+        if: steps.detect.outputs.changed == 'true'
+        with:
+          name: release-plan
+          path: plan.json
+
+  benchmark:
+    needs: check
+    if: needs.check.outputs.changed == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@v4
+        with:
+          name: release-plan
+      - name: Recover history and measure releases
+        run: |
+          set -euo pipefail
+          site="$RUNNER_TEMP/site"
+          git init -q -b benchmark-results "$site"
+          git -C "$site" remote add origin "https://github.com/$GITHUB_REPOSITORY.git"
+          if git -C "$site" ls-remote --exit-code origin refs/heads/benchmark-results >/dev/null; then
+            git -C "$site" fetch --depth=1 origin benchmark-results
+            git -C "$site" merge --ff-only FETCH_HEAD
+          else
+            code=$?
+            test "$code" = 2
+          fi
+          gcc -O2 -static ci/measure.c -o "$RUNNER_TEMP/timer"
+          node ci/benchmark.mjs plan.json "$site" "$RUNNER_TEMP/timer"
+          mkdir "$RUNNER_TEMP/public"
+          cp -r "$site/index.html" "$site/runs" "$RUNNER_TEMP/public/"
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ runner.temp }}/public
+      - name: Publish results
+        id: deploy
+        uses: actions/deploy-pages@v4
+      - name: Record successfully published versions
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cd "$RUNNER_TEMP/site"
+          git config user.name github-actions
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html runs state.json
+          git commit -qm "Publish benchmark run $GITHUB_RUN_ID"
+          gh auth setup-git
+          git push origin HEAD:refs/heads/benchmark-results
