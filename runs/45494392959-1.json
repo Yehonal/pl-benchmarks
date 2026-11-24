@@ -1,0 +1,55 @@
+{
+  "time": "2026-11-24T21:46:33.807Z",
+  "commit": "ea30fd20741576c11cee5c9368d0d7c903295de9",
+  "cpu": "AMD EPYC 7763 64-Core Processor",
+  "runner": "20261116.376.1",
+  "jobs": [
+    {
+      "name": "eclipse-temurin",
+      "version": "27.0.1.1_4",
+      "previous": "25.0.5.1_2"
+    }
+  ],
+  "results": [
+    {
+      "name": "eclipse-temurin",
+      "variant": "Java",
+      "version": "25.0.5.1_2",
+      "image": "eclipse-temurin@sha256:ce2ef9d2d67a68de5e196d4de9d743327c44a10b57fe02ec39f572c652cacfd3",
+      "samples": [
+        {
+          "seconds": 1.34789,
+          "peakKiB": 42760
+        },
+        {
+          "seconds": 1.342572,
+          "peakKiB": 42964
+        },
+        {
+          "seconds": 1.344139,
+          "peakKiB": 42904
+        }
+      ]
+    },
+    {
+      "name": "eclipse-temurin",
+      "variant": "Java",
+      "version": "27.0.1.1_4",
+      "image": "eclipse-temurin@sha256:a235abaaf912abaa4e806f6977009dc999ef04f1a75c9156626780884e807ee1",
+      "samples": [
+        {
+          "seconds": 1.341994,
+          "peakKiB": 42176
+        },
+        {
+          "seconds": 1.342511,
+          "peakKiB": 42068
+        },
+        {
+          "seconds": 1.342567,
+          "peakKiB": 42064
+        }
+      ]
+    }
+  ]
+}
