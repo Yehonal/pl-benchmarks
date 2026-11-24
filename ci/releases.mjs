@@ -5,17 +5,20 @@ import { join } from 'node:path';
 // Match immutable version numbers, excluding floating aliases and prereleases.
 const tags = {
   gcc: /^(\d+\.\d+\.\d+)$/,
-  node: /^(\d+\.\d+\.\d+)-bookworm$/,
-  python: /^(\d+\.\d+\.\d+)-bookworm$/,
-  pypy: /^(3\.\d+-\d+\.\d+\.\d+)-bookworm$/,
+  node: /^(\d+\.\d+\.\d+)$/,
+  python: /^(\d+\.\d+\.\d+)$/,
+  pypy: /^(3\.\d+-\d+\.\d+\.\d+)$/,
   php: /^(\d+\.\d+\.\d+)-cli$/,
   perl: /^(5\.\d+\.\d+)$/,
-  'eclipse-temurin': /^((?:8u\d+-b\d+|\d+(?:\.\d+)*_\d+))-jdk-noble$/,
+  'eclipse-temurin': /^((?:8u\d+-b\d+|\d+(?:\.\d+)*_\d+))-jdk$/,
 };
 const order = new Intl.Collator('en', { numeric: true }).compare;
 export function versions(name, manifest) {
-  return [...new Set(manifest.split('\n').filter(line => line.startsWith('Tags: '))
-    .flatMap(line => line.slice(6).split(', ')).map(tag => tags[name].exec(tag)?.[1])
+  const linuxTags = manifest.split(/\n\s*\n/)
+    .filter(block => !/^Architectures:.*windows-amd64/m.test(block))
+    .flatMap(block => [...block.matchAll(/^(?:SharedTags|Tags): (.+)$/gm)])
+    .flatMap(match => match[1].split(', '));
+  return [...new Set(linuxTags.map(tag => tags[name].exec(tag)?.[1])
     .filter(v => v && (name !== 'perl' || Number(v.split('.')[1]) % 2 === 0)))].sort(order);
 }
 
