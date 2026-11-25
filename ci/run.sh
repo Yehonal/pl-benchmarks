@@ -6,6 +6,7 @@ version=$2
 case "$name" in
   gcc) gcc -O3 /src/euler.c -lm -o c; g++ -O3 /src/euler.cpp -o cpp ;;
   eclipse-temurin) javac -d . /src/euler.java ;;
+  rustpython) cargo install --locked --version "=$version" --features freeze-stdlib --jobs 2 rustpython ;;
   cython)
     pip install --disable-pip-version-check --no-cache-dir "Cython==$version"
     cython --embed -3 /src/euler.pyx -o euler.c
@@ -24,6 +25,7 @@ run() {
 case "$name" in
   gcc) run C ./c; run C++ ./cpp ;;
   node) run Node node /src/euler.js ;;
+  rustpython) run RustPython rustpython /src/euler.py ;;
   python) run CPython python3 /src/euler.py ;;
   pypy) run PyPy pypy3 /src/euler.py; run PyPy-noJIT pypy3 --jit off /src/euler.py ;;
   eclipse-temurin) run Java java -cp . euler ;;
