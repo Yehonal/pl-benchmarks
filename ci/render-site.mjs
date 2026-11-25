@@ -56,7 +56,11 @@ export function renderSite(site) {
     '</p>' + ranking(report.data.results) + '</details>').join('');
   const html = '<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">' +
     '<title>Euler 12 benchmark leaderboard</title><style>:root{color-scheme:light dark}body{font:1rem/1.5 system-ui;max-width:65rem;margin:auto;padding:1rem}table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}td,th{padding:.45rem .6rem;border-bottom:1px solid #8886;text-align:left;white-space:nowrap}.scroll{overflow-x:auto}summary{cursor:pointer;padding:.6rem 0}section{margin:2rem 0}</style>' +
-    '<main><h1 id="leaderboard">Euler 12 leaderboard</h1><a href="' + repository + '">GitHub repository</a><p>Elapsed time includes process startup. Automated runs rank fastest first, using median elapsed time from three fresh processes. Peak RAM is the median peak RSS. Each run must return 842161320.</p>' +
+    '<main><h1 id="leaderboard">Euler 12 leaderboard</h1><a href="' + repository + '">GitHub repository</a>' +
+    '<h2 id="why-euler-12">Why benchmark Euler 12?</h2>' +
+    '<p>What does it cost to process data once it arrives? While a database read is pending, asynchronous I/O lets a service handle other requests. Once the records arrive, applying a rule or updating a total still takes CPU time for every record.</p>' +
+    '<p>Euler 12 makes that cost easy to compare. Each implementation visits the same triangular numbers and tests the same divisors in the same order. The ranking shows how long each runtime takes to execute this integer loop. Database latency and network throughput are separate measurements.</p>' +
+    '<p>Elapsed time includes process startup and any JIT warm-up during the search. Automated runs rank fastest first, using median elapsed time from three fresh processes. Peak RAM is the median peak RSS. Each run must return 842161320.</p>' +
     '<section><h2>Same-run ranking</h2><p>Original trial division: each triangular number is tested against every integer from 1 through its square root. All implementations on one runner in the most recent complete comparison.</p>' + referenceTable +
     '</section><section><h2>Latest release measurements</h2><p>Most recently benchmarked release per implementation. Dates and hosted hardware can differ between rows.</p>' +
     ranking([...latest.values()], true) + '</section><section><h2>Run history</h2>' + sections + '</section>' + historical + '</main></html>';
