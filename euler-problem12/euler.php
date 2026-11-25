@@ -1,17 +1,21 @@
 <?php
-function firstTriangle(): int {
-    for ($size = 256; ; $size *= 2) {
-        $counts = array_fill(0, $size + 1, 0);
-        for ($d = 1; $d * $d <= $size; ++$d) {
-            ++$counts[$d * $d];
-            for ($n = $d * $d + $d; $n <= $size; $n += $d) $counts[$n] += 2;
-        }
-        for ($i = $size === 256 ? 1 : $size >> 1; $i < $size; ++$i) {
-            $half = ($i + 1) >> 1;
-            $odd = $i | 1;
-            if ($counts[$half] * $counts[$odd] > 1000) return $half * $odd;
-        }
-    }
+
+function factorCount ($n)
+{
+    $square = sqrt ($n);
+    $isquare = (int) $square;
+    $count = $isquare == $square ? -1 : 0;
+    for ($candidate = 1; $candidate <= $isquare; $candidate ++)
+        if (0 == $n % $candidate) $count += 2;
+    return $count;
 }
 
-echo firstTriangle(), "\n";
+
+$triangle = 1;
+$index = 1;
+while (factorCount ($triangle) < 1001)
+{
+    $index ++;
+    $triangle += $index;
+}
+echo ($triangle);
