@@ -1,5 +1,6 @@
+import { renderSite } from './render-site.mjs';
 import { execFileSync } from 'node:child_process';
-import { existsSync, mkdirSync, readFileSync, writeFileSync, readdirSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 
 const [planPath, site, timer] = process.argv.slice(2);
@@ -47,18 +48,5 @@ const history = join(site, 'runs');
 mkdirSync(history, { recursive: true });
 const id = process.env.GITHUB_RUN_ID + '-' + process.env.GITHUB_RUN_ATTEMPT;
 writeFileSync(join(history, id + '.json'), JSON.stringify(run, null, 2));
-const escape = s => String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
-const median = (a, key) => a.map(s => s[key]).sort((x,y) => x-y)[1];
-const reports = readdirSync(history).filter(f => /^\d+-\d+\.json$/.test(f)).map(file => ({
-  file, data: JSON.parse(readFileSync(join(history, file))),
-})).sort((a,b) => b.data.time.localeCompare(a.data.time));
-const sections = reports.map(({file,data}) => {
-  const rows = data.results.map(row => '<tr><td>' + escape(row.variant) + '</td><td>' + escape(row.version) +
-    '</td><td>' + median(row.samples,'seconds').toFixed(3) + '</td><td>' +
-    (median(row.samples,'peakKiB')/1024).toFixed(1) + '</td></tr>').join('');
-  return '<section><h2>' + escape(data.time) + '</h2><p>' + escape(data.cpu) +
-    ' · <a href="runs/' + file + '">Raw samples and image digests</a></p><table><thead><tr><th>Runtime</th><th>Version</th><th>Seconds</th><th>Peak MiB</th></tr></thead><tbody>' +
-    rows + '</tbody></table></section>';
-});
-writeFileSync(join(site,'index.html'), '<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Euler 12 benchmarks</title><style>body{font:16px system-ui;max-width:55rem;margin:auto;padding:1rem}table{border-collapse:collapse}th,td{text-align:left;padding:.4rem .7rem;border-bottom:1px solid #999}section{margin:2rem 0}</style><h1>Euler 12 benchmarks</h1><p>Three fresh processes per version. Median elapsed time and median peak RSS. Expected answer: 842161320. Compare versions within the same run; hosted hardware can vary.</p>' + sections.join('') + '</html>');
+renderSite(site);
 writeFileSync(statePath, JSON.stringify({ tip, seen, measured }, null, 2));
