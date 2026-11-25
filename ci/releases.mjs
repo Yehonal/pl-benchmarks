@@ -26,14 +26,16 @@ export function versions(name, manifest) {
 export function plan(catalogue, state) {
   const jobs = [];
   const seen = {};
+  const needsBaseline = Object.keys(catalogue).some(name => !state?.seen[name]);
   for (const [name, available] of Object.entries(catalogue)) {
     const before = state?.seen[name] ?? [];
-    const candidates = state ? available.filter(v => !before.includes(v)) : available.slice(-1);
+    const candidates = state?.seen[name] ? available.filter(v => !before.includes(v)) : available.slice(-1);
+    if (needsBaseline && !candidates.includes(available.at(-1))) candidates.push(available.at(-1));
     const measured = [...(state?.measured[name] ?? [])];
     for (const version of candidates) {
       const older = measured.filter(v => order(v, version) < 0).sort(order);
       const previous = older.filter(v => v.split('.')[0] === version.split('.')[0]).at(-1) ?? older.at(-1);
-      jobs.push({ name, version, previous: previous ?? null });
+      jobs.push({ name, version, previous: needsBaseline ? null : previous ?? null });
       measured.push(version);
     }
     seen[name] = [...new Set([...before, ...available])].sort(order);
@@ -65,6 +67,11 @@ if (process.argv[1]?.endsWith('/releases.mjs')) {
   const { releases } = await response.json();
   catalogue.cython = Object.keys(releases).filter(v => /^\d+\.\d+\.\d+$/.test(v) && releases[v].some(f => !f.yanked)).sort(order);
   if (!catalogue.cython.length) throw Error('Empty Cython catalogue');
+  const registry = await fetch('https://index.crates.io/ru/st/rustpython');
+  if (!registry.ok) throw Error('RustPython registry HTTP ' + registry.status);
+  catalogue.rustpython = (await registry.text()).trim().split('\n').map(line => JSON.parse(line))
+    .filter(entry => !entry.yanked && /^\d+\.\d+\.\d+$/.test(entry.vers)).map(entry => entry.vers).sort(order);
+  if (!catalogue.rustpython.length) throw Error('Empty RustPython catalogue');
   const { jobs, seen } = plan(catalogue, state);
   writeFileSync(output, JSON.stringify({ tip, seen, jobs }));
   console.log(jobs.length ? jobs : 'No new stable versions.');
