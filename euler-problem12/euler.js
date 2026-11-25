@@ -1,16 +1,32 @@
-function firstTriangle() {
-    for (let size = 256; ; size *= 2) {
-        const counts = new Uint16Array(size + 1);
-        for (let d = 1; d * d <= size; ++d) {
-            ++counts[d * d];
-            for (let n = d * d + d; n <= size; n += d) counts[n] += 2;
-        }
-        for (let i = size === 256 ? 1 : size / 2; i < size; ++i) {
-            const half = (i + 1) >> 1;
-            const odd = i | 1;
-            if (counts[half] * counts[odd] > 1000) return half * odd;
-        }
+// following line can be useful to test the script inside a browser
+typeof module === 'undefined' && console.time('main');
+
+function main() {
+
+    function factorCount (n)
+    {
+        var square = Math.sqrt(n);
+        var isquare = ~~square;
+        var count = isquare == square ? -1 : 0;
+        var candidate;
+        for (candidate = 1; candidate <= isquare; candidate ++)
+            if (0 == n % candidate) count += 2;
+
+        return count;
     }
+
+
+    let triangle = 1;
+    let index = 1;
+    while (factorCount (triangle) < 1001)
+    {
+        index ++;
+        triangle += index;
+    }
+    console.log(triangle);
+
 }
 
-console.log(firstTriangle());
+main();
+
+typeof module === 'undefined' && console.timeEnd('main');

@@ -1,1 +1,1 @@
-export const suite = 'divisor-pair-sieve-v2';
+export const suite = 'trial-division-native-v3';

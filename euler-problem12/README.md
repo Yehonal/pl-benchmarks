@@ -2,7 +2,7 @@
 
 ### === INTRO ===
 
-[This](https://github.com/Yehonal/pl-benchmarks/tree/master/euler-problem12) is the [Problem #12](https://projecteuler.net/index.php?section=problems&id=12) from [Project Euler](https://projecteuler.net/) to compare optimized implementations in:
+[This](https://github.com/Yehonal/pl-benchmarks/tree/master/euler-problem12) is the [Problem #12](https://projecteuler.net/index.php?section=problems&id=12) from [Project Euler](https://projecteuler.net/) to compare trial-division implementations in:
  
 - C
 - C++

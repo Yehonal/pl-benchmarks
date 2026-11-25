@@ -1,21 +1,19 @@
-def first_triangle():
-    size = 256
-    start = 1
-    while True:
-        counts = [0] * (size + 1)
-        d = 1
-        while d * d <= size:
-            square = d * d
-            counts[square] += 1
-            for n in range(square + d, size + 1, d):
-                counts[n] += 2
-            d += 1
-        for i in range(start, size):
-            half = (i + 1) >> 1
-            odd = i | 1
-            if counts[half] * counts[odd] > 1000:
-                return half * odd
-        start, size = size, size * 2
+#! /usr/bin/env python3.2
 
+import math
 
-print(first_triangle())
+def factorCount (n):
+    square = math.sqrt (n)
+    isquare = int (square)
+    count = -1 if isquare == square else 0
+    for candidate in range (1, isquare + 1):
+        if not n % candidate: count += 2
+    return count
+
+triangle = 1
+index = 1
+while factorCount (triangle) < 1001:
+    index += 1
+    triangle += index
+
+print (triangle)
