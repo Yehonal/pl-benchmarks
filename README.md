@@ -2,11 +2,11 @@
 
 ## Why benchmark Euler 12?
 
-How long does each runtime take to do the same computation, and how does that time change between releases? The workload is small enough to inspect: every implementation visits the same triangular numbers and tries the same divisors in the same order. Most of the work is a loop over integers with a remainder operation and a branch. A sieve could find the answer faster, but it would change the amount of work and break the comparison with earlier runs.
+I care about what happens after the data arrives. Even a service built around I/O has to do something with the records it reads: compare values, apply rules, update totals. Asynchronous I/O lets the service do useful work while a read is pending. Once the records are in memory, the CPU time needed to process each one still matters. When I choose a runtime, I want to know the cost of expressing that work directly in the language.
 
-Keeping that work fixed makes runtime differences easier to investigate. For example, CPython, PyPy and RustPython execute the same Python file. Comparing PyPy with its JIT enabled and disabled also lets us change one runtime setting while keeping the source and input fixed. The timer measures elapsed time from process launch through exit, including startup and any JIT warm-up during the search.
+Euler 12 gives me one small computation I can follow from source to result. Every implementation visits the same triangular numbers and tests the same divisors in the same order. That fixes the loop, integer remainder and branch being compared across runtimes and releases. CPython, PyPy and RustPython even execute the same file. The timer includes process startup and any JIT warm-up during the search.
 
-An I/O benchmark answers a different question. If a request spends most of its time waiting for a database, its latency depends heavily on the database, caches and network. Two runtimes could finish that request at nearly the same time while taking very different times to execute this loop. Use the same-run ranking to compare this CPU-bound workload. Use application-level measurements to choose a runtime for a service.
+The ranking is specific to that loop. Sorting strings, multiplying matrices in a native library and serving concurrent network requests exercise different code paths and deserve their own measurements.
 
 [Benchmark implementations](euler-problem12/)
 
