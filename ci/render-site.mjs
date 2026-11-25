@@ -5,7 +5,7 @@ import { pathToFileURL } from 'node:url';
 
 const escape = value => String(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
 const median = (samples, key) => samples.map(s => s[key]).sort((a, b) => a - b)[1];
-const tracked = ['C', 'C++', 'Node', 'CPython', 'PyPy', 'PyPy-noJIT', 'PHP', 'Perl', 'Java', 'Cython', 'RustPython'];
+const tracked = ['C', 'C++', 'Node', 'CPython', 'PyPy', 'PyPy-noJIT', 'PHP', 'Perl', 'Java', 'Cython', 'RustPython', 'Go', 'Rust'];
 
 function ranking(rows, showRun = false) {
   const sorted = rows.map(r => ({ ...r, seconds: median(r.samples, 'seconds'), kib: median(r.samples, 'peakKiB') }))

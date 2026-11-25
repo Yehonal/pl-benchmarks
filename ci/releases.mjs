@@ -6,6 +6,8 @@ import { join } from 'node:path';
 // Match immutable version numbers, excluding floating aliases and prereleases.
 const tags = {
   gcc: /^(\d+\.\d+\.\d+)$/,
+  golang: /^(\d+\.\d+\.\d+)$/,
+  rust: /^(\d+\.\d+\.\d+)$/,
   node: /^(\d+\.\d+\.\d+)$/,
   python: /^(\d+\.\d+\.\d+)$/,
   pypy: /^(3\.\d+-\d+\.\d+\.\d+)$/,

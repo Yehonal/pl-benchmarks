@@ -16,6 +16,7 @@ const run = { suite, time: new Date().toISOString(), commit: process.env.GITHUB_
 const docker = (...args) => execFileSync('docker', args, { encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
 const imageFor = (name, v) => ({
   gcc: 'gcc:' + v, node: 'node:' + v, python: 'python:' + v,
+  golang: 'golang:' + v, rust: 'rust:' + v,
   rustpython: 'rust:1-bookworm',
   pypy: 'pypy:' + v, php: 'php:' + v + '-cli', perl: 'perl:' + v,
   'eclipse-temurin': 'eclipse-temurin:' + v + '-jdk', cython: 'python:3.12.12-bookworm',
