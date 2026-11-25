@@ -1,0 +1,326 @@
+{
+  "suite": "trial-division-native-v3",
+  "time": "2026-11-25T10:15:07.774Z",
+  "commit": "d707c2836714ea06fd35b9d29e2a748634cd1592",
+  "cpu": "Intel(R) Xeon(R) 6975P-C",
+  "runner": "20261116.133.1",
+  "jobs": [
+    {
+      "name": "gcc",
+      "version": "16.2.0",
+      "previous": null
+    },
+    {
+      "name": "golang",
+      "version": "1.27.4",
+      "previous": null
+    },
+    {
+      "name": "rust",
+      "version": "1.100.0",
+      "previous": null
+    },
+    {
+      "name": "node",
+      "version": "26.13.1",
+      "previous": null
+    },
+    {
+      "name": "python",
+      "version": "3.15.2",
+      "previous": null
+    },
+    {
+      "name": "pypy",
+      "version": "3.12-8.0.1",
+      "previous": null
+    },
+    {
+      "name": "php",
+      "version": "8.6.0",
+      "previous": null
+    },
+    {
+      "name": "perl",
+      "version": "5.44.0",
+      "previous": null
+    },
+    {
+      "name": "eclipse-temurin",
+      "version": "27.0.1.1_4",
+      "previous": null
+    },
+    {
+      "name": "cython",
+      "version": "3.3.2",
+      "previous": null
+    },
+    {
+      "name": "rustpython",
+      "version": "0.6.0",
+      "previous": null
+    }
+  ],
+  "results": [
+    {
+      "name": "gcc",
+      "variant": "C",
+      "version": "16.2.0",
+      "image": "gcc@sha256:b560ecf8f694944afa8137ba7462a73f75bb799880535fcd7e0dfc890ba8b27a",
+      "samples": [
+        {
+          "seconds": 0.932684,
+          "peakKiB": 1768
+        },
+        {
+          "seconds": 0.934209,
+          "peakKiB": 1904
+        },
+        {
+          "seconds": 0.934917,
+          "peakKiB": 1848
+        }
+      ]
+    },
+    {
+      "name": "gcc",
+      "variant": "C++",
+      "version": "16.2.0",
+      "image": "gcc@sha256:b560ecf8f694944afa8137ba7462a73f75bb799880535fcd7e0dfc890ba8b27a",
+      "samples": [
+        {
+          "seconds": 0.935375,
+          "peakKiB": 3656
+        },
+        {
+          "seconds": 0.936291,
+          "peakKiB": 3680
+        },
+        {
+          "seconds": 0.936561,
+          "peakKiB": 3656
+        }
+      ]
+    },
+    {
+      "name": "golang",
+      "variant": "Go",
+      "version": "1.27.4",
+      "image": "golang@sha256:5f1b98fa02fe396ebce2a0227a0e08309e11792915b9dd2e1f71053d7e7e6666",
+      "samples": [
+        {
+          "seconds": 0.93549,
+          "peakKiB": 1856
+        },
+        {
+          "seconds": 0.933185,
+          "peakKiB": 1856
+        },
+        {
+          "seconds": 0.932785,
+          "peakKiB": 1856
+        }
+      ]
+    },
+    {
+      "name": "rust",
+      "variant": "Rust",
+      "version": "1.100.0",
+      "image": "rust@sha256:e84068000361bf3d4a5ba2b7647f62893528b1eb9f847d7a23b493f5ce8ea254",
+      "samples": [
+        {
+          "seconds": 0.931682,
+          "peakKiB": 2016
+        },
+        {
+          "seconds": 0.932348,
+          "peakKiB": 2028
+        },
+        {
+          "seconds": 0.931529,
+          "peakKiB": 2024
+        }
+      ]
+    },
+    {
+      "name": "node",
+      "variant": "Node",
+      "version": "26.13.1",
+      "image": "node@sha256:f8e5d4bb28fa55c74f1345166a082a10b7c68f22304350c1ce0d18358ae94996",
+      "samples": [
+        {
+          "seconds": 0.964713,
+          "peakKiB": 53972
+        },
+        {
+          "seconds": 0.965458,
+          "peakKiB": 53892
+        },
+        {
+          "seconds": 0.963828,
+          "peakKiB": 54036
+        }
+      ]
+    },
+    {
+      "name": "python",
+      "variant": "CPython",
+      "version": "3.15.2",
+      "image": "python@sha256:e4bc83a3314d078d651f06c8440e9a03ba892ee2f6577437f174abd8731fb343",
+      "samples": [
+        {
+          "seconds": 16.37448,
+          "peakKiB": 9804
+        },
+        {
+          "seconds": 16.571705,
+          "peakKiB": 8788
+        },
+        {
+          "seconds": 16.37712,
+          "peakKiB": 8852
+        }
+      ]
+    },
+    {
+      "name": "pypy",
+      "variant": "PyPy",
+      "version": "3.12-8.0.1",
+      "image": "pypy@sha256:4a7794b8d0fa2f4397186dd80934336423444d309e20d7539de4e67db7bdaecb",
+      "samples": [
+        {
+          "seconds": 1.638615,
+          "peakKiB": 138644
+        },
+        {
+          "seconds": 1.614412,
+          "peakKiB": 107588
+        },
+        {
+          "seconds": 1.614846,
+          "peakKiB": 107100
+        }
+      ]
+    },
+    {
+      "name": "pypy",
+      "variant": "PyPy-noJIT",
+      "version": "3.12-8.0.1",
+      "image": "pypy@sha256:4a7794b8d0fa2f4397186dd80934336423444d309e20d7539de4e67db7bdaecb",
+      "samples": [
+        {
+          "seconds": 26.526842,
+          "peakKiB": 295612
+        },
+        {
+          "seconds": 26.540611,
+          "peakKiB": 295996
+        },
+        {
+          "seconds": 26.592246,
+          "peakKiB": 295604
+        }
+      ]
+    },
+    {
+      "name": "php",
+      "variant": "PHP",
+      "version": "8.6.0",
+      "image": "php@sha256:64340b5b5eb25273bdd0986124c8efb08dadfbd4fda6929c8a44618a318c7b17",
+      "samples": [
+        {
+          "seconds": 3.450788,
+          "peakKiB": 25124
+        },
+        {
+          "seconds": 3.434316,
+          "peakKiB": 25200
+        },
+        {
+          "seconds": 3.45817,
+          "peakKiB": 25248
+        }
+      ]
+    },
+    {
+      "name": "perl",
+      "variant": "Perl",
+      "version": "5.44.0",
+      "image": "perl@sha256:680c4f8663310e39ac95a43650146d091979210dbb4e6d05676a58a6a7eb1d71",
+      "samples": [
+        {
+          "seconds": 24.435472,
+          "peakKiB": 7292
+        },
+        {
+          "seconds": 24.392655,
+          "peakKiB": 7464
+        },
+        {
+          "seconds": 24.612152,
+          "peakKiB": 7320
+        }
+      ]
+    },
+    {
+      "name": "eclipse-temurin",
+      "variant": "Java",
+      "version": "27.0.1.1_4",
+      "image": "eclipse-temurin@sha256:a235abaaf912abaa4e806f6977009dc999ef04f1a75c9156626780884e807ee1",
+      "samples": [
+        {
+          "seconds": 0.962777,
+          "peakKiB": 42148
+        },
+        {
+          "seconds": 0.960377,
+          "peakKiB": 42468
+        },
+        {
+          "seconds": 0.960687,
+          "peakKiB": 42496
+        }
+      ]
+    },
+    {
+      "name": "cython",
+      "variant": "Cython",
+      "version": "3.3.2",
+      "image": "python@sha256:c0abd0758831ad99b7a29e0c1a875da9c4abb9a2e3f21e2eeb585dbcadfb6cd0",
+      "samples": [
+        {
+          "seconds": 0.944643,
+          "peakKiB": 8864
+        },
+        {
+          "seconds": 0.945558,
+          "peakKiB": 8712
+        },
+        {
+          "seconds": 0.944824,
+          "peakKiB": 8800
+        }
+      ]
+    },
+    {
+      "name": "rustpython",
+      "variant": "RustPython",
+      "version": "0.6.0",
+      "image": "rust@sha256:75d26c23c24cc6ea1cdabf0714a6bff8fd7bf3248716043fd7ae86dac7f41b94",
+      "samples": [
+        {
+          "seconds": 39.30684,
+          "peakKiB": 60304
+        },
+        {
+          "seconds": 39.31723,
+          "peakKiB": 59888
+        },
+        {
+          "seconds": 38.422717,
+          "peakKiB": 60212
+        }
+      ]
+    }
+  ]
+}
