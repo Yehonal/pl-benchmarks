@@ -1,31 +1,22 @@
-#!/usr/bin/perl
+use strict;
+use warnings;
+use integer;
 
-use Math::Complex;
-
-sub factorCount{
-	my ($n) = @_;
-	$square = sqrt($n);
-	$isquare = int($square);
-    
-    $count=0;
-	if ($square == $isquare){
-		$count = -1;
-	}
-
-	for ($candidate = 1; $candidate <= $isquare; $candidate++) {
-		if ($n % $candidate == 0){
-			$count +=2;
-		}
-	}
-
-	return $count;
+sub first_triangle {
+    for (my $size = 256; ; $size *= 2) {
+        my @counts = (0) x ($size + 1);
+        for (my $d = 1; $d * $d <= $size; ++$d) {
+            ++$counts[$d * $d];
+            for (my $n = $d * $d + $d; $n <= $size; $n += $d) {
+                $counts[$n] += 2;
+            }
+        }
+        for (my $i = $size == 256 ? 1 : $size / 2; $i < $size; ++$i) {
+            my $half = ($i + 1) >> 1;
+            my $odd = $i | 1;
+            return $half * $odd if $counts[$half] * $counts[$odd] > 1000;
+        }
+    }
 }
 
-$triangle = 1;
-$index = 1;
-while (factorCount($triangle) < 1001) {
-	$index++;
-	$triangle += $index;
-}
-
-print $triangle . "\n";
+print first_triangle(), "\n";

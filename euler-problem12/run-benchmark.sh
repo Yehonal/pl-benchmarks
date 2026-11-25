@@ -8,12 +8,12 @@
 
 if $RUN_C ; then
     echo "compiling euler.c"
-    gcc euler.c -lm -o "./bin/c"
+    gcc -O3 euler.c -lm -o "./bin/c"
 fi
 
 if $RUN_CPP ; then
     echo "compiling euler.cpp"
-    g++ euler.cpp -o "./bin/cpp"
+    g++ -O3 euler.cpp -o "./bin/cpp"
 fi
 
 if $RUN_JAVA ; then
@@ -23,8 +23,8 @@ fi
 
 if $RUN_CYTHON ; then
     echo "compiling euler.py"
-    cython3 euler.py --embed -o ./build/python.c
-    gcc -Os -I'/usr/include/python'$PYTHON_VERSION'm' -o ./bin/python ./build/python.c -l'python'$PYTHON_VERSION'm' -lpthread -lm -lutil -ldl
+    cython3 -3 euler.pyx --embed -o ./build/python.c
+    gcc -O3 -I'/usr/include/python'$PYTHON_VERSION'm' -o ./bin/python ./build/python.c -l'python'$PYTHON_VERSION'm' -lpthread -lm -lutil -ldl
 fi
 
 if $RUN_C ; then

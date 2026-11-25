@@ -4,12 +4,12 @@ cd /tmp
 name=$1
 version=$2
 case "$name" in
-  gcc) gcc -O2 /src/euler.c -lm -o c; g++ -O2 /src/euler.cpp -o cpp ;;
+  gcc) gcc -O3 /src/euler.c -lm -o c; g++ -O3 /src/euler.cpp -o cpp ;;
   eclipse-temurin) javac -d . /src/euler.java ;;
   cython)
     pip install --disable-pip-version-check --no-cache-dir "Cython==$version"
-    cython --embed -3 /src/euler.py -o euler.c
-    gcc -Os $(python3-config --includes) euler.c $(python3-config --embed --ldflags) -o cython-bench ;;
+    cython --embed -3 /src/euler.pyx -o euler.c
+    gcc -O3 $(python3-config --includes) euler.c $(python3-config --embed --ldflags) -o cython-bench ;;
 esac
 run() {
   local variant=$1
