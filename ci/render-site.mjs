@@ -23,7 +23,8 @@ export function renderSite(site) {
   const history = join(site, 'runs');
   const reports = readdirSync(history).filter(f => /^\d+-\d+\.json$/.test(f)).map(file => ({
     file, data: JSON.parse(readFileSync(join(history, file), 'utf8')),
-  })).sort((a, b) => b.data.time.localeCompare(a.data.time));
+  })).filter(({ data }) => data.suite === undefined || data.suite === suite)
+    .sort((a, b) => b.data.time.localeCompare(a.data.time));
   const current = reports.filter(({ data }) => data.suite === suite);
   const reference = current.find(({ data }) => tracked.every(v => data.results.some(r => r.variant === v)));
   const latest = new Map();
