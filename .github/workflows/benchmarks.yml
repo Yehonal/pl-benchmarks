@@ -17,7 +17,7 @@ jobs:
     outputs:
       changed: ${{ steps.detect.outputs.changed }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
       - name: Load last successful release inventory
@@ -36,7 +36,7 @@ jobs:
         run: |
           git clone --quiet --bare --filter=blob:none --single-branch https://github.com/docker-library/official-images.git "$RUNNER_TEMP/catalogue.git"
           node ci/releases.mjs previous "$RUNNER_TEMP/catalogue.git" plan.json
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7.0.2
         if: steps.detect.outputs.changed == 'true'
         with:
           name: release-plan
@@ -51,10 +51,10 @@ jobs:
       contents: write
       pages: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8.0.2
         with:
           name: release-plan
       - name: Recover history and measure releases
