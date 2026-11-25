@@ -1,0 +1,251 @@
+{
+  "suite": "trial-division-native-v3",
+  "time": "2026-11-25T09:19:32.404Z",
+  "commit": "8c28f490f909985de93eaf5e03dd88f684da80ab",
+  "cpu": "Intel(R) Xeon(R) 6975P-C",
+  "runner": "20261116.133.1",
+  "jobs": [
+    {
+      "name": "gcc",
+      "version": "16.2.0",
+      "previous": null
+    },
+    {
+      "name": "node",
+      "version": "26.13.1",
+      "previous": null
+    },
+    {
+      "name": "python",
+      "version": "3.15.2",
+      "previous": null
+    },
+    {
+      "name": "pypy",
+      "version": "3.12-8.0.1",
+      "previous": null
+    },
+    {
+      "name": "php",
+      "version": "8.6.0",
+      "previous": null
+    },
+    {
+      "name": "perl",
+      "version": "5.44.0",
+      "previous": null
+    },
+    {
+      "name": "eclipse-temurin",
+      "version": "27.0.1.1_4",
+      "previous": null
+    },
+    {
+      "name": "cython",
+      "version": "3.3.2",
+      "previous": null
+    }
+  ],
+  "results": [
+    {
+      "name": "gcc",
+      "variant": "C",
+      "version": "16.2.0",
+      "image": "gcc@sha256:b560ecf8f694944afa8137ba7462a73f75bb799880535fcd7e0dfc890ba8b27a",
+      "samples": [
+        {
+          "seconds": 0.928882,
+          "peakKiB": 1948
+        },
+        {
+          "seconds": 0.932557,
+          "peakKiB": 1760
+        },
+        {
+          "seconds": 0.933284,
+          "peakKiB": 1836
+        }
+      ]
+    },
+    {
+      "name": "gcc",
+      "variant": "C++",
+      "version": "16.2.0",
+      "image": "gcc@sha256:b560ecf8f694944afa8137ba7462a73f75bb799880535fcd7e0dfc890ba8b27a",
+      "samples": [
+        {
+          "seconds": 0.932304,
+          "peakKiB": 3696
+        },
+        {
+          "seconds": 0.929877,
+          "peakKiB": 3692
+        },
+        {
+          "seconds": 0.930305,
+          "peakKiB": 3664
+        }
+      ]
+    },
+    {
+      "name": "node",
+      "variant": "Node",
+      "version": "26.13.1",
+      "image": "node@sha256:f8e5d4bb28fa55c74f1345166a082a10b7c68f22304350c1ce0d18358ae94996",
+      "samples": [
+        {
+          "seconds": 0.961148,
+          "peakKiB": 53840
+        },
+        {
+          "seconds": 0.958473,
+          "peakKiB": 54104
+        },
+        {
+          "seconds": 0.958235,
+          "peakKiB": 53824
+        }
+      ]
+    },
+    {
+      "name": "python",
+      "variant": "CPython",
+      "version": "3.15.2",
+      "image": "python@sha256:e4bc83a3314d078d651f06c8440e9a03ba892ee2f6577437f174abd8731fb343",
+      "samples": [
+        {
+          "seconds": 16.49637,
+          "peakKiB": 9860
+        },
+        {
+          "seconds": 16.256725,
+          "peakKiB": 8844
+        },
+        {
+          "seconds": 16.220564,
+          "peakKiB": 8808
+        }
+      ]
+    },
+    {
+      "name": "pypy",
+      "variant": "PyPy",
+      "version": "3.12-8.0.1",
+      "image": "pypy@sha256:4a7794b8d0fa2f4397186dd80934336423444d309e20d7539de4e67db7bdaecb",
+      "samples": [
+        {
+          "seconds": 1.63639,
+          "peakKiB": 139584
+        },
+        {
+          "seconds": 1.601179,
+          "peakKiB": 107556
+        },
+        {
+          "seconds": 1.601648,
+          "peakKiB": 107412
+        }
+      ]
+    },
+    {
+      "name": "pypy",
+      "variant": "PyPy-noJIT",
+      "version": "3.12-8.0.1",
+      "image": "pypy@sha256:4a7794b8d0fa2f4397186dd80934336423444d309e20d7539de4e67db7bdaecb",
+      "samples": [
+        {
+          "seconds": 26.249149,
+          "peakKiB": 295740
+        },
+        {
+          "seconds": 26.324543,
+          "peakKiB": 295332
+        },
+        {
+          "seconds": 26.377921,
+          "peakKiB": 295656
+        }
+      ]
+    },
+    {
+      "name": "php",
+      "variant": "PHP",
+      "version": "8.6.0",
+      "image": "php@sha256:64340b5b5eb25273bdd0986124c8efb08dadfbd4fda6929c8a44618a318c7b17",
+      "samples": [
+        {
+          "seconds": 3.435523,
+          "peakKiB": 25464
+        },
+        {
+          "seconds": 3.429917,
+          "peakKiB": 25528
+        },
+        {
+          "seconds": 3.438684,
+          "peakKiB": 25156
+        }
+      ]
+    },
+    {
+      "name": "perl",
+      "variant": "Perl",
+      "version": "5.44.0",
+      "image": "perl@sha256:680c4f8663310e39ac95a43650146d091979210dbb4e6d05676a58a6a7eb1d71",
+      "samples": [
+        {
+          "seconds": 24.412099,
+          "peakKiB": 7424
+        },
+        {
+          "seconds": 24.227242,
+          "peakKiB": 7484
+        },
+        {
+          "seconds": 24.137784,
+          "peakKiB": 7448
+        }
+      ]
+    },
+    {
+      "name": "eclipse-temurin",
+      "variant": "Java",
+      "version": "27.0.1.1_4",
+      "image": "eclipse-temurin@sha256:a235abaaf912abaa4e806f6977009dc999ef04f1a75c9156626780884e807ee1",
+      "samples": [
+        {
+          "seconds": 0.963574,
+          "peakKiB": 42328
+        },
+        {
+          "seconds": 0.958376,
+          "peakKiB": 42308
+        },
+        {
+          "seconds": 0.961599,
+          "peakKiB": 42164
+        }
+      ]
+    },
+    {
+      "name": "cython",
+      "variant": "Cython",
+      "version": "3.3.2",
+      "image": "python@sha256:c0abd0758831ad99b7a29e0c1a875da9c4abb9a2e3f21e2eeb585dbcadfb6cd0",
+      "samples": [
+        {
+          "seconds": 0.944388,
+          "peakKiB": 8748
+        },
+        {
+          "seconds": 0.944197,
+          "peakKiB": 8748
+        },
+        {
+          "seconds": 0.944081,
+          "peakKiB": 8792
+        }
+      ]
+    }
+  ]
+}

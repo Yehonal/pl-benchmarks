@@ -1,5 +1,5 @@
 {
-  "suite": "divisor-pair-sieve-v2",
+  "suite": "trial-division-native-v3",
   "tip": "782af7c0cb08dbff06c07d2ddfdda40131d7e75b",
   "seen": {
     "gcc": [
