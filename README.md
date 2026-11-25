@@ -1,9 +1,14 @@
 # BENCHMARKS
 
-Here you can find various sources to benchmark multiple programming languages
+## Why benchmark Euler 12?
 
+How long does each runtime take to do the same computation, and how does that time change between releases? The workload is small enough to inspect: every implementation visits the same triangular numbers and tries the same divisors in the same order. Most of the work is a loop over integers with a remainder operation and a branch. A sieve could find the answer faster, but it would change the amount of work and break the comparison with earlier runs.
 
-* [Euler problem #12](https://github.com/Yehonal/pl-benchmarks/blob/master/euler-problem12/README.md)
+Keeping that work fixed makes runtime differences easier to investigate. For example, CPython, PyPy and RustPython execute the same Python file. Comparing PyPy with its JIT enabled and disabled also lets us change one runtime setting while keeping the source and input fixed. The timer measures elapsed time from process launch through exit, including startup and any JIT warm-up during the search.
+
+An I/O benchmark answers a different question. If a request spends most of its time waiting for a database, its latency depends heavily on the database, caches and network. Two runtimes could finish that request at nearly the same time while taking very different times to execute this loop. Use the same-run ranking to compare this CPU-bound workload. Use application-level measurements to choose a runtime for a service.
+
+[Benchmark implementations](euler-problem12/)
 
 ## Daily release benchmarks
 
