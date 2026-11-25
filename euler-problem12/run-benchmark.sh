@@ -5,6 +5,12 @@
 #
 # COMPILING PHASE
 #
+if "${RUN_GO:-false}"; then
+    go build -o ./bin/go-bench euler.go || exit 1
+fi
+if "${RUN_RUST:-false}"; then
+    rustc -C opt-level=3 euler.rs -o ./bin/rust-bench || exit 1
+fi
 
 if $RUN_C ; then
     echo "compiling euler.c"
@@ -25,6 +31,13 @@ if $RUN_CYTHON ; then
     echo "compiling euler.py"
     cython3 -3 euler.pyx --embed -o ./build/python.c
     gcc -O3 -I'/usr/include/python'$PYTHON_VERSION'm' -o ./bin/python ./build/python.c -l'python'$PYTHON_VERSION'm' -lpthread -lm -lutil -ldl
+fi
+
+if "${RUN_GO:-false}"; then
+    time ./bin/go-bench
+fi
+if "${RUN_RUST:-false}"; then
+    time ./bin/rust-bench
 fi
 
 if $RUN_C ; then

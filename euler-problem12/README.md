@@ -6,6 +6,8 @@
  
 - C
 - C++
+- Go
+- Rust
 - Java
 - Python
 - JavaScript
