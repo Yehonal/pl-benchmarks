@@ -1,3 +1,4 @@
+import { suite } from './suite.mjs';
 import { execFileSync } from 'node:child_process';
 import { readFileSync, writeFileSync, appendFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
@@ -43,7 +44,8 @@ export function plan(catalogue, state) {
 if (process.argv[1]?.endsWith('/releases.mjs')) {
   const [site, upstream, output] = process.argv.slice(2);
   const statePath = join(site, 'state.json');
-  const state = existsSync(statePath) ? JSON.parse(readFileSync(statePath)) : null;
+  const saved = existsSync(statePath) ? JSON.parse(readFileSync(statePath)) : null;
+  const state = saved?.suite === suite ? saved : null;
   const git = (...args) => execFileSync('git', ['-C', upstream, ...args], { encoding: 'utf8' }).trim();
   const tip = git('rev-parse', 'HEAD');
   const catalogue = {};

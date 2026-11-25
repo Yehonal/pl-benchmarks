@@ -1,3 +1,4 @@
+import { suite } from './suite.mjs';
 import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -23,9 +24,10 @@ export function renderSite(site) {
   const reports = readdirSync(history).filter(f => /^\d+-\d+\.json$/.test(f)).map(file => ({
     file, data: JSON.parse(readFileSync(join(history, file), 'utf8')),
   })).sort((a, b) => b.data.time.localeCompare(a.data.time));
-  const reference = reports.find(({ data }) => tracked.every(v => data.results.some(r => r.variant === v)));
+  const current = reports.filter(({ data }) => data.suite === suite);
+  const reference = current.find(({ data }) => tracked.every(v => data.results.some(r => r.variant === v)));
   const latest = new Map();
-  for (const {file, data} of reports) {
+  for (const {file, data} of current) {
     for (const row of data.results) {
       if (data.jobs.some(j => j.name === row.name && j.version === row.version) && !latest.has(row.variant)) {
         latest.set(row.variant, { ...row, file, time: data.time });
@@ -35,12 +37,12 @@ export function renderSite(site) {
   const source = ({ file, data }) => escape(data.time.slice(0, 10)) + ' UTC · ' + escape(data.cpu) + ' · <a href="runs/' + file + '">Raw measurements</a>';
   const referenceTable = reference ? '<p>' + source(reference) + '</p>' + ranking(reference.data.results) : '<p>Awaiting a complete comparison run.</p>';
   const historical = readFileSync(new URL('./historical-results.html', import.meta.url), 'utf8');
-  const sections = reports.map(report => '<details><summary>' + escape(report.data.time) + '</summary><p>' + source(report) +
+  const sections = reports.map(report => '<details><summary>' + escape(report.data.time) + ' · ' + escape(report.data.suite ?? 'original trial division') + '</summary><p>' + source(report) +
     '</p>' + ranking(report.data.results) + '</details>').join('');
   const html = '<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">' +
     '<title>Euler 12 benchmark leaderboard</title><style>:root{color-scheme:light dark}body{font:1rem/1.5 system-ui;max-width:65rem;margin:auto;padding:1rem}table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}td,th{padding:.45rem .6rem;border-bottom:1px solid #8886;text-align:left;white-space:nowrap}.scroll{overflow-x:auto}summary{cursor:pointer;padding:.6rem 0}section{margin:2rem 0}</style>' +
-    '<main><h1 id="leaderboard">Euler 12 leaderboard</h1><p>Automated runs rank fastest first, using median elapsed time from three fresh processes. Peak RAM is the median peak RSS. Each run must return 842161320.</p>' +
-    '<section><h2>Same-run ranking</h2><p>All implementations on one runner in the most recent complete comparison.</p>' + referenceTable +
+    '<main><h1 id="leaderboard">Euler 12 leaderboard</h1><p>Elapsed time includes process startup. Automated runs rank fastest first, using median elapsed time from three fresh processes. Peak RAM is the median peak RSS. Each run must return 842161320.</p>' +
+    '<section><h2>Same-run ranking</h2><p>Optimized divisor-pair sieve. All implementations on one runner in the most recent complete comparison.</p>' + referenceTable +
     '</section><section><h2>Latest release measurements</h2><p>Most recently benchmarked release per implementation. Dates and hosted hardware can differ between rows.</p>' +
     ranking([...latest.values()], true) + '</section><section><h2>Run history</h2>' + sections + '</section>' + historical + '</main></html>';
   writeFileSync(join(site, 'index.html'), html);

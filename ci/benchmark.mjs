@@ -1,3 +1,4 @@
+import { suite } from './suite.mjs';
 import { renderSite } from './render-site.mjs';
 import { execFileSync } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
@@ -7,9 +8,10 @@ const [planPath, site, timer] = process.argv.slice(2);
 const { jobs, seen, tip } = JSON.parse(readFileSync(planPath));
 if (!jobs.length) throw Error('Empty benchmark plan');
 const statePath = join(site, 'state.json');
-const measured = existsSync(statePath) ? JSON.parse(readFileSync(statePath)).measured : {};
+const previousState = existsSync(statePath) ? JSON.parse(readFileSync(statePath)) : null;
+const measured = previousState?.suite === suite ? previousState.measured : {};
 const cpu = readFileSync('/proc/cpuinfo','utf8').match(/^model name\s*:\s*(.+)$/m)?.[1];
-const run = { time: new Date().toISOString(), commit: process.env.GITHUB_SHA, cpu,
+const run = { suite, time: new Date().toISOString(), commit: process.env.GITHUB_SHA, cpu,
   runner: process.env.ImageVersion, jobs, results: [] };
 const docker = (...args) => execFileSync('docker', args, { encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
 const imageFor = (name, v) => ({
@@ -49,4 +51,4 @@ mkdirSync(history, { recursive: true });
 const id = process.env.GITHUB_RUN_ID + '-' + process.env.GITHUB_RUN_ATTEMPT;
 writeFileSync(join(history, id + '.json'), JSON.stringify(run, null, 2));
 renderSite(site);
-writeFileSync(statePath, JSON.stringify({ tip, seen, measured }, null, 2));
+writeFileSync(statePath, JSON.stringify({ suite, tip, seen, measured }, null, 2));
