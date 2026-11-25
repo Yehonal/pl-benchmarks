@@ -1,0 +1,55 @@
+{
+  "time": "2026-11-25T08:06:36.383Z",
+  "commit": "e7f7b0ec87157c0662f6e4bc43d1215ce3daddaa",
+  "cpu": "Intel(R) Xeon(R) 6975P-C",
+  "runner": "20261116.133.1",
+  "jobs": [
+    {
+      "name": "cython",
+      "version": "3.3.2",
+      "previous": "3.3.1"
+    }
+  ],
+  "results": [
+    {
+      "name": "cython",
+      "variant": "Cython",
+      "version": "3.3.1",
+      "image": "python@sha256:c0abd0758831ad99b7a29e0c1a875da9c4abb9a2e3f21e2eeb585dbcadfb6cd0",
+      "samples": [
+        {
+          "seconds": 17.95984,
+          "peakKiB": 9104
+        },
+        {
+          "seconds": 17.892336,
+          "peakKiB": 9088
+        },
+        {
+          "seconds": 17.960151,
+          "peakKiB": 9092
+        }
+      ]
+    },
+    {
+      "name": "cython",
+      "variant": "Cython",
+      "version": "3.3.2",
+      "image": "python@sha256:c0abd0758831ad99b7a29e0c1a875da9c4abb9a2e3f21e2eeb585dbcadfb6cd0",
+      "samples": [
+        {
+          "seconds": 17.963332,
+          "peakKiB": 8976
+        },
+        {
+          "seconds": 17.872343,
+          "peakKiB": 8960
+        },
+        {
+          "seconds": 17.818803,
+          "peakKiB": 9176
+        }
+      ]
+    }
+  ]
+}
